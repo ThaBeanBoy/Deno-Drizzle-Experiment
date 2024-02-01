@@ -1,0 +1,17 @@
+{
+  "name": "drizzle-experiment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "migration:generate": "drizzle-kit generate:pg --schema=./schema.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.4.1",
+    "drizzle-kit": "^0.20.14",
+    "drizzle-orm": "^0.29.3"
+  }
+}
