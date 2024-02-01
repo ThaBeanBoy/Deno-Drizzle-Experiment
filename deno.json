@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "postgres/": "npm:postgres/",
+    "std/": "https://deno.land/std@0.214.0/"
+  },
+  "tasks": {
+    "db:studio": "npx drizzle-kit studio",
+    "db:migration:generate": "npm run migration:generate",
+    "db:migration:push": "deno run -A migrate.ts"
+  }
+}

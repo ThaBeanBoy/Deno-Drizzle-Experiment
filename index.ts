@@ -1,6 +1,6 @@
-import { drizzle } from 'npm:drizzle-orm/postgres-js';
-import postgres from 'npm:postgres';
-import { load } from 'https://deno.land/std@0.214.0/dotenv/mod.ts';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres/';
+import { load } from 'std/dotenv/mod.ts';
 import { users } from './schema.ts';
 
 const env = await load();

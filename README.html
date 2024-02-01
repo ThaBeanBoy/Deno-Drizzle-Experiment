@@ -1,0 +1,383 @@
+<h1>Deno + Drizzle</h1>
+<p>
+  This is a quick experiment on using the
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/"
+    >Drizzle ORM</a
+  >
+  with a
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://www.typescriptlang.org/"
+    >Typescript</a
+  >
+  application running in the
+  <a target="_blank" rel="noopener noreferrer nofollow" href="https://deno.com/"
+    >Deno </a
+  >runtime.
+</p>
+<h2>Why Drizzle</h2>
+<h3><strong>Why use an ORM</strong></h3>
+<p>
+  Before I explain why I used
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/"
+    >Drizzle</a
+  >, you must first understand what an ORM is. If you know an ORM, you can move
+  on to the next section.
+</p>
+<p>ORM is short for <strong>Object Relational Mapper </strong>…</p>
+<h3><strong>Why Drizzle</strong></h3>
+<p>
+  There are a couple of reasons why one would use
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/"
+    >Drizzle.</a
+  >
+  Some of those reasons are already listed on the
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/"
+    >Drizzle</a
+  >
+  website such as
+</p>
+<ul>
+  <li>
+    <p>
+      <strong>Lightweight &amp; edge ready</strong>.
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://deno.com/"
+        >Deno</a
+      >
+      runs on the edge.
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://www.prisma.io/"
+        >Prisma</a
+      >
+      (an alternative ts/js ORM),
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://www.prisma.io/"
+        >Prisma</a
+      >
+      is not edge-ready, it requires some configuration.
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong>Top-notch performance.</strong> Here are the
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://orm.drizzle.team/benchmarks"
+        >benchmarks, </a
+      >you can have a look. The benchmark is a performance comparison between
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://orm.drizzle.team/"
+        >Drizzle</a
+      >
+      &amp;
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://www.prisma.io/"
+        >Prisma.</a
+      >
+    </p>
+  </li>
+  <li>
+    <p><strong>Hassle-free SQL migrations</strong></p>
+  </li>
+  <li>
+    <p><strong>No code generation</strong></p>
+  </li>
+  <li>
+    <p><strong>Zero dependencies</strong></p>
+  </li>
+  <li>
+    <p><strong>Feature-rich SQL dialects</strong></p>
+  </li>
+</ul>
+<h2>Installation</h2>
+<p>
+  If you are planning on using this, you have 2 options, you can scaffold the
+  project or you can use it to learn how to set up
+  <a target="_blank" rel="noopener noreferrer nofollow" href="https://deno.com/"
+    >Deno</a
+  >
+  with
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/"
+    >Drizzle.</a
+  >
+  Before installation, you will need to set up environment variables as
+  described in the next section.
+</p>
+<h3><strong>Pre-requisites</strong></h3>
+<p>
+  For this project to run, you will need to install the
+  <a target="_blank" rel="noopener noreferrer nofollow" href="https://deno.com/"
+    >Deno</a
+  >
+  and
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://nodejs.org"
+    >Node</a
+  >
+  runtimes.
+</p>
+<p>
+  <a target="_blank" rel="noopener noreferrer nofollow" href="https://deno.com/"
+    >Deno</a
+  >
+  is for the main application.
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://nodejs.org"
+    >Node</a
+  >
+  is used to generate migrations. You could say it’s mainly used as a dev
+  dependency I guess 🤷‍♂️.
+</p>
+<p>
+  You can use any text editor, but I used
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://code.visualstudio.com/"
+    >VSCode</a
+  >. If you are using
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://code.visualstudio.com/"
+    >VSCode</a
+  >, you can consider installing the
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno"
+    >Deno extension</a
+  >.
+</p>
+<h3><strong>Environment Variables</strong></h3>
+<p>
+  Before continuing, if you are planning on using, forking etc… this project,
+  you have to be aware of the different environment variables you have to set
+  up.
+</p>
+<ul>
+  <li>
+    <p>
+      <code>DB_URL</code> This is a URL connection to a
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://www.postgresql.org/"
+        >PostgreSQL</a
+      >
+      database. You can locally host your database or use some sort of online
+      service. I used
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://supabase.com/"
+        >Supabase</a
+      >
+      &amp; got the connection URL from there.
+    </p>
+  </li>
+</ul>
+<pre><code>DB_URL={database connection url}</code></pre>
+<h3><strong>Set-Up</strong></h3>
+<ol>
+  <li>
+    <p>
+      Make the project folder. If you are using
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://code.visualstudio.com/"
+        >VSCode</a
+      >, and you have installed the
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno"
+        >Deno extension</a
+      >, open the command palette (keyboard shortcut: <code>ctrl</code> +
+      <code>shift</code> + <code>p</code>). In the command palette, run
+      <code>Deno: Enable</code> to set up
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://deno.com/"
+        >Deno</a
+      >
+      in your project.
+    </p>
+  </li>
+</ol>
+<pre><code>mkdir {project-name}</code></pre>
+<ol start="2">
+  <li>
+    <p>
+      Initialise the git repository &amp; make a <code>.gitignore</code> file.
+      Initialising a repo isn’t necessary, but if you do, a
+      <code>.gitinore</code> file is important.
+    </p>
+  </li>
+</ol>
+<pre><code>touch .git</code></pre>
+<ol start="3">
+  <li>
+    <p>
+      In the .gitgnore, make sure to ignore the <code>.env</code> file and
+      <code>node_modules</code> folder.
+      <strong
+        ><mark
+          data-color="#ffcc00"
+          style="background-color: #ffcc00; color: inherit"
+          >This will ensure that when you push changes to a remote repo, other
+          users won’t have access to your database’s connection URL.</mark
+        ></strong
+      >
+    </p>
+  </li>
+</ol>
+<pre><code>.env
+node_modules</code></pre>
+<ol start="5">
+  <li>
+    <p>
+      Initialise a <code>package.json</code>. The quickest way is to run
+      <code>npm init -y</code>, you won’t have to answer the questionnaire.
+    </p>
+  </li>
+  <li>
+    <p>
+      Install
+      <a
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        href="https://nodejs.org"
+        >Node</a
+      >
+      dependencies
+    </p>
+  </li>
+</ol>
+<pre><code>npm i drizzle-orm pg dotenv
+npm - -D drizzle-kit</code></pre>
+<pre><code>// You should notice the following in the package.json
+{
+    // ... rest of package.json
+
+    "devDependencies": {
+        "drizzle-kit": "^0.20.14"
+      },
+      "dependencies": {
+          "dotenv": "^16.4.1",
+          "drizzle-orm": "^0.29.3",
+          "pg": "^8.11.3"
+      }
+
+    // ... rest of package.json
+}</code></pre>
+<ol start="7">
+  <li>
+    <p>Add the following npm script to the <code>package.json</code> file.</p>
+  </li>
+</ol>
+<pre><code>{
+    "scripts": {
+        "migration:generate": "drizzle-kit generate:pg --schema=./schema.ts"
+    }
+}</code></pre>
+<ol start="8">
+  <li>
+    <p>Generate a <code>deno.json</code> file with the following content</p>
+  </li>
+</ol>
+<pre><code>{
+  "imports": {
+    "postgres/": "npm:postgres/",
+    "std/": "https://deno.land/std@0.214.0/"
+  },
+  "tasks": {
+    "migration:generate": "npm run migration:generate",
+    "migration:push": "deno run -A migrate.ts",
+    "db:studio": "npx drizzle-kit studio"
+  }
+}</code></pre>
+<ol start="9">
+  <li>
+    <p>
+      Make a migration file. You can name it whatever you want but I named mine
+      <code>migrate.ts</code>
+    </p>
+  </li>
+</ol>
+<pre><code>import { drizzle } from 'drizzle-orm/postgres-js';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import postgres from 'postgres/';
+import { load } from 'std/dotenv/mod.ts';
+
+const env = await load();
+
+const sql = postgres(env.DB_URL, { max: 1 });
+const db = drizzle(sql);
+
+await migrate(db, { migrationsFolder: 'drizzle' });
+
+await sql.end();</code></pre>
+<h2>Schemas &amp; Migrations</h2>
+<h3><strong>Schemas</strong></h3>
+<p>
+  At this point, you should be able to make your schemas. visit the
+  <a
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    href="https://orm.drizzle.team/docs/sql-schema-declaration"
+    >SQL Schema docs</a
+  >
+  on how to make your schemas.
+</p>
+<h3><strong>Migrations</strong></h3>
+<p>
+  Once you have defined your schemas, can migrate and push the migrations to the
+  database.
+</p>
+<p>To generate a migration, run the following in your terminal</p>
+<pre><code>deno task migration:generate</code></pre>
+<p>
+  To push the migrations to your database, run the following in your terminal
+</p>
+<pre><code>deno task migration:push</code></pre>
+<h2>Studio</h2>
+<p>
+  To view the data in the database, you can run the following in your terminal
+  to open up the studio
+</p>
+<pre><code>deno task db:studio</code></pre>
